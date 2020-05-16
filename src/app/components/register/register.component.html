@@ -1,6 +1,12 @@
 <div class="col-lg-5">
   <h1 class="h1-strong">Registrarse</h1>
-  <form #registerForm="ngForm" (ngSubmit)="onSubmit()" class="col-lg-12">
+  <div class="alert alert-success" *ngIf="status == 'success'">
+      Registro completado correctamente, <a [routerLink]="['/login']">Identificate aqui</a>
+  </div>
+  <div class="alert alert-danger" *ngIf="status == 'error'">
+    El registro no a podido completarse, quzas el email ya este en uso, intentalo denuevo
+</div>
+  <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="col-lg-12">
     <p>
       <label>Nombre</label>
       <input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" class="form-control" required/>
