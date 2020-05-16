@@ -12,6 +12,8 @@ export class LoginComponent implements OnInit {
 
   public user: User;
   public status: string;
+  public identity;
+  public token;
 
   constructor(
     private _route: ActivatedRoute,
@@ -27,15 +29,51 @@ export class LoginComponent implements OnInit {
     // console.log(this.user);
     this._userService.signUp(this.user).subscribe(
       response => {
-        console.log(response.user);
-        this.status = 'success';
+        this.identity = response.user;
+        console.log(this.identity);
+        if ( !this.identity && !this.identity._id ) {
+          this.status = 'error';
+        } else {
+          this.status = 'success';
+          // Persistir datos de usuario
+
+          // Conseguir el token
+          this.getToken();
+
+        }
       },
       error => {
         const errorMessage = <any>error;
-        console.log('errorMessage');
+        console.log(errorMessage);
         if (errorMessage != null) {
           this.status = 'error';
-        } 
+        }
+
+      }
+    );
+  }
+
+  getToken() {
+    this._userService.signUp(this.user, 'true').subscribe(
+      response => {
+        this.token = response.token;
+        console.log(this.token);
+        if ( this.token.length <= 0 ) {
+          this.status = 'error';
+        } else {
+          this.status = 'success';
+          // Persistir token de usuario
+
+          // Conseguir los contadores o estadisticas del user
+
+        }
+      },
+      error => {
+        const errorMessage = <any>error;
+        console.log(errorMessage);
+        if (errorMessage != null) {
+          this.status = 'error';
+        }
 
       }
     );
