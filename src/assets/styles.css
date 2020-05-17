@@ -29,3 +29,9 @@
 .navigation .navbar a:hover{  
     background: #cc1717 !important;
 }
+
+.jumbotron {
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+}
